@@ -102,8 +102,9 @@ const DetailScreen = () => {
 
         <View style={styles.metaRow}>
           <View style={styles.ratingContainer}>
+            <Icon name="star" size={16} color="#FFD700" style={{ marginRight: 4 }} />
             <Text style={styles.ratingText}>
-              ⭐ {selectedProduct.rating.toFixed(1)}
+              {selectedProduct.rating.toFixed(1)}
             </Text>
           </View>
           <View style={styles.categoryBadge}>
@@ -145,11 +146,17 @@ const DetailScreen = () => {
         <TouchableOpacity
           style={[
             styles.actionButton,
-            selectedProduct.stock === 0 && styles.actionButtonDisabled,
+            isFavorite && styles.actionButtonFavorite,
           ]}
-          disabled={selectedProduct.stock === 0}>
+          onPress={handleToggleFavorite}>
+          <Icon
+            name={isFavorite ? 'heart' : 'heart-outline'}
+            size={24}
+            color="#FFFFFF"
+            style={{ marginRight: 8 }}
+          />
           <Text style={styles.actionButtonText}>
-            {selectedProduct.stock > 0 ? 'Agregar al carrito' : 'Agotado'}
+            {isFavorite ? 'Eliminar de Favoritos' : 'Agregar a Favoritos'}
           </Text>
         </TouchableOpacity>
       </View>
@@ -316,10 +323,15 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
     borderRadius: 12,
     alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'center',
     marginBottom: 24,
   },
   actionButtonDisabled: {
     backgroundColor: COLORS.disabled,
+  },
+  actionButtonFavorite: {
+    backgroundColor: COLORS.error,
   },
   actionButtonText: {
     fontSize: 16,

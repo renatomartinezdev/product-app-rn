@@ -66,7 +66,10 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         </View>
 
         <View style={styles.ratingRow}>
-          <Text style={styles.rating}>⭐ {product.rating.toFixed(1)}</Text>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Icon name="star" size={14} color="#FFD700" style={{ marginRight: 4 }} />
+            <Text style={styles.rating}>{product.rating.toFixed(1)}</Text>
+          </View>
           <Text style={styles.stock}>
             {product.stock > 0 ? `${product.stock} disponibles` : 'Agotado'}
           </Text>

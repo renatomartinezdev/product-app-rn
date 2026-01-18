@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -8,14 +8,15 @@ import {
   TextInput,
   RefreshControl,
 } from 'react-native';
-import {useAppDispatch, useAppSelector} from '../../store/hooks';
-import {fetchProducts} from '../../store/slices/productsSlice';
+import Icon from 'react-native-vector-icons/Ionicons';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { fetchProducts } from '../../store/slices/productsSlice';
 import ProductCard from '../../components/products/ProductCard';
-import {COLORS} from '../../constants/colors';
+import { COLORS } from '../../constants/colors';
 
 const HomeScreen = () => {
   const dispatch = useAppDispatch();
-  const {products, loading, error} = useAppSelector(state => state.products);
+  const { products, loading, error } = useAppSelector(state => state.products);
   const [searchQuery, setSearchQuery] = useState('');
   const [refreshing, setRefreshing] = useState(false);
 
@@ -45,7 +46,6 @@ const HomeScreen = () => {
   if (error && products.length === 0) {
     return (
       <View style={styles.centerContainer}>
-        <Text style={styles.errorIcon}>⚠️</Text>
         <Text style={styles.errorText}>Error al cargar productos</Text>
         <Text style={styles.errorDetail}>{error}</Text>
       </View>
@@ -55,19 +55,27 @@ const HomeScreen = () => {
   return (
     <View style={styles.container}>
       <View style={styles.searchContainer}>
-        <TextInput
-          style={styles.searchInput}
-          placeholder="Buscar productos..."
-          placeholderTextColor={COLORS.textSecondary}
-          value={searchQuery}
-          onChangeText={setSearchQuery}
-        />
+        <View style={styles.searchInputContainer}>
+          <Icon
+            name="search-outline"
+            size={20}
+            color={COLORS.textSecondary}
+            style={styles.searchIcon}
+          />
+          <TextInput
+            style={styles.searchInput}
+            placeholder="Buscar productos..."
+            placeholderTextColor={COLORS.textSecondary}
+            value={searchQuery}
+            onChangeText={setSearchQuery}
+          />
+        </View>
       </View>
 
       <FlatList
         data={filteredProducts}
         keyExtractor={item => item.id.toString()}
-        renderItem={({item}) => <ProductCard product={item} />}
+        renderItem={({ item }) => <ProductCard product={item} />}
         contentContainerStyle={styles.listContent}
         showsVerticalScrollIndicator={false}
         refreshControl={
@@ -128,13 +136,23 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: COLORS.border,
   },
-  searchInput: {
-    height: 44,
+  searchInputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
     backgroundColor: COLORS.background,
     borderRadius: 22,
     paddingHorizontal: 16,
+    height: 44,
+  },
+  searchIcon: {
+    marginRight: 8,
+  },
+  searchInput: {
+    flex: 1,
     fontSize: 16,
     color: COLORS.textPrimary,
+    height: 44,
+    padding: 0,
   },
   listContent: {
     paddingVertical: 8,
