@@ -1,7 +1,7 @@
 import React from 'react';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {BottomTabParamList} from './types';
-
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { BottomTabParamList } from './types';
+import Icon from 'react-native-vector-icons/Ionicons';
 import HomeScreen from '../screens/HomeScreen/HomeScreen';
 import FavoritesScreen from '../screens/FavoritesScreen/FavoritesScreen';
 
@@ -18,6 +18,13 @@ const BottomTabNavigator = () => {
           backgroundColor: '#FFFFFF',
           borderTopColor: '#E5E5EA',
           borderTopWidth: 1,
+          height: 60, 
+          paddingBottom: 8, 
+          paddingTop: 8, 
+        },
+        tabBarLabelStyle: {
+          fontSize: 12,
+          fontWeight: '600',
         },
       }}>
       <Tab.Screen
@@ -25,6 +32,9 @@ const BottomTabNavigator = () => {
         component={HomeScreen}
         options={{
           tabBarLabel: 'Productos',
+          tabBarIcon: ({ color, size }) => (
+            <Icon name="grid-outline" size={size} color={color} />
+          ),
         }}
       />
       <Tab.Screen
@@ -32,6 +42,9 @@ const BottomTabNavigator = () => {
         component={FavoritesScreen}
         options={{
           tabBarLabel: 'Favoritos',
+          tabBarIcon: ({ color, size }) => (
+            <Icon name="heart-outline" size={size} color={color} />
+          ),
         }}
       />
     </Tab.Navigator>
